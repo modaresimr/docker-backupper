@@ -20,7 +20,8 @@ services:
       - volumerize-cache:/volumerize-cache
       - volumerize-restore:/restore
 
-
+    restart: always
+        
 volumes:
   volumerize-cache:
   volumerize-restore:
