@@ -23,7 +23,7 @@ function commandJob() {
   local returnCode=0;
   prepareJob "$jobNumber"
   shift;
-  ${DUPLICITY_JOB_COMMAND} restore --force $@ ${DUPLICITY_JOB_OPTIONS} ${VOLUMERIZE_JOB_INCUDES} ${VOLUMERIZE_JOB_TARGET} ${VOLUMERIZE_RESTORE} || returnCode=$? && true ;
+  ${DUPLICITY_JOB_COMMAND} verify --compare-data $@ ${DUPLICITY_JOB_OPTIONS} ${VOLUMERIZE_JOB_INCUDES} ${VOLUMERIZE_JOB_TARGET} ${VOLUMERIZE_JOB_RESTORE} || returnCode=$? && true ;
   if [ "$returnCode" -gt "$DUPLICITY_RETURN_CODE" ]; then
     DUPLICITY_RETURN_CODE=$returnCode
   fi
@@ -45,7 +45,7 @@ function commandExecution() {
 			echo "--file-to-restore argument is not set"
 			exit 10
 	fi
-    ${DUPLICITY_COMMAND} restore --force $args ${DUPLICITY_OPTIONS} ${VOLUMERIZE_INCUDES} ${VOLUMERIZE_TARGET} "${VOLUMERIZE_RESTORE}/$file_to_restore" || DUPLICITY_RETURN_CODE=$? && true ;
+    ${DUPLICITY_COMMAND} verify --compare-data $args ${DUPLICITY_OPTIONS} ${VOLUMERIZE_INCUDES} ${VOLUMERIZE_TARGET} "${VOLUMERIZE_RESTORE}/$file_to_restore" || DUPLICITY_RETURN_CODE=$? && true ;
   elif [ ! -z "${1##*[!0-9]*}" ]; then
     commandJob $@
   elif [ -n "${JOB_COUNT}" ]; then
@@ -53,10 +53,7 @@ function commandExecution() {
   fi
 }
 
-${VOLUMERIZE_SCRIPT_DIR}/prepoststrategy preAction restore
-source ${VOLUMERIZE_SCRIPT_DIR}/stopContainers.sh
+${VOLUMERIZE_SCRIPT_DIR}/prepoststrategy preAction verify
 commandExecution $@
-source ${VOLUMERIZE_SCRIPT_DIR}/startContainers.sh
-export DUPLICITY_RETURN_CODE
-${VOLUMERIZE_SCRIPT_DIR}/prepoststrategy postAction restore
+${VOLUMERIZE_SCRIPT_DIR}/prepoststrategy postAction verify
 exit $DUPLICITY_RETURN_CODE
