@@ -8,6 +8,7 @@ services:
       - VOLUMERIZE_TARGET=s3://s3.<bucket-region>.amazonaws.com/<bucket-name>[/<path>]
       - AWS_ACCESS_KEY_ID=accesskey
       - AWS_SECRET_ACCESS_KEY=secretkey
+      - TZ=Europe/Paris
       - VOLUMERIZE_JOBBER_TIME=0 0 3 * * *
       - MYSQL_USERNAME=root
       - MYSQL_PASSWORD=1234
@@ -17,7 +18,9 @@ services:
       - REMOVE_ALL_BUT_N_FULL=4
     volumes:
       - volumerize-cache:/volumerize-cache
+      - volumerize-restore:/restore
 
 
 volumes:
   volumerize-cache:
+  volumerize-restore:
