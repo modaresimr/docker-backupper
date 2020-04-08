@@ -45,6 +45,7 @@ function commandExecution() {
 			echo "--file-to-restore argument is not set"
 			exit 10
 	fi
+	mkdir -p ${VOLUMERIZE_RESTORE}/$file_to_restore 
     ${DUPLICITY_COMMAND} verify --compare-data $args ${DUPLICITY_OPTIONS} ${VOLUMERIZE_INCUDES} ${VOLUMERIZE_TARGET} "${VOLUMERIZE_RESTORE}/$file_to_restore" || DUPLICITY_RETURN_CODE=$? && true ;
   elif [ ! -z "${1##*[!0-9]*}" ]; then
     commandJob $@
