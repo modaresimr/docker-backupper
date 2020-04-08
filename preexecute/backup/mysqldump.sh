@@ -14,6 +14,6 @@ for MYSQL_DATABASE in `mysql -h ${MYSQL_HOST} -u${MYSQL_USERNAME} -p${MYSQL_PASS
   #SIZE_BYTES=$(mysql --skip-column-names -u ${MYSQL_USERNAME} -p${MYSQL_PASSWORD} ${MYSQL_DATABASE} -e "SELECT ROUND(SUM(data_length * 0.8), 0) FROM information_schema.TABLES WHERE table_schema='${MYSQL_DATABASE}';")
 
   echo "mysqldump starts " ${MYSQL_DATABASE}
-  mysqldump --databases "${MYSQL_DATABASE}" --single-transaction --add-drop-database --user="${MYSQL_USERNAME}" --password="${MYSQL_PASSWORD}" --host="${MYSQL_HOST}" > ${VOLUMERIZE_SOURCE}/volumerize-mysql/dump-${MYSQL_DATABASE}.sql
+  mysqldump --databases "${MYSQL_DATABASE}" --single-transaction --add-drop-database --user="${MYSQL_USERNAME}" --password="${MYSQL_PASSWORD}" --host="${MYSQL_HOST}" > ${VOLUMERIZE_SOURCE}/volumerize-mysql/dump-${MYSQL_DATABASE}.sql || true
   
 done
