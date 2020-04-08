@@ -5,7 +5,7 @@ check_env "Mysqldump" "MYSQL_PASSWORD" "MYSQL_USERNAME" "MYSQL_HOST"
 echo "Creating $VOLUMERIZE_SOURCE folder if not exists"
 mkdir -p $VOLUMERIZE_SOURCE/volumerize-mysql/
 
-log "Starting automatic repair and optimize for all databases..."
+echo "Starting automatic repair and optimize for all databases..."
 mysqlcheck -h ${MYSQL_HOST} -u${MYSQL_USERNAME} -p${MYSQL_PASSWORD} --all-databases --optimize --auto-repair --silent 2>&1
 
 for MYSQL_DATABASE in `mysql -h ${MYSQL_HOST} -u${MYSQL_USERNAME} -p${MYSQL_PASSWORD} -Bse 'show databases'`; do
