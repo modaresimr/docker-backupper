@@ -1,0 +1,11 @@
+echo usage restorepgsql PGDATABASE otherparams 
+source /preexecute/utils/check-env.sh
+PGDATABASE=$1
+shift
+check_env "PGPASSWORD" "PGUSERNAME" "PGHOST"  
+
+restore --file-to-restore volumerize-pgsql/dump-${PGDATABASE}.sql $@
+
+echo "pgsql import starts $PGDATABASE"
+pv ${VOLUMERIZE_RESTORE}/volumerize-pgsql/dump-${PGDATABASE}.sql | psql -u ${PGUSERNAME} -d $PGDATABASE
+echo "Import done"
