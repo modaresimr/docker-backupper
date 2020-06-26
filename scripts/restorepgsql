@@ -7,5 +7,5 @@ check_env "PGPASSWORD" "PGUSERNAME" "PGHOST"
 restore --file-to-restore volumerize-pgsql/dump-${PGDATABASE}.sql $@
 
 echo "pgsql import starts $PGDATABASE"
-pv ${VOLUMERIZE_RESTORE}/volumerize-pgsql/dump-${PGDATABASE}.sql | psql -u ${PGUSERNAME} -d $PGDATABASE
+pv ${VOLUMERIZE_RESTORE}/volumerize-pgsql/dump-${PGDATABASE}.sql | psql -U ${PGUSERNAME} $PGDATABASE
 echo "Import done"
