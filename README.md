@@ -81,3 +81,47 @@ volumes:
 ```
 
 Then execute `docker-compose exec volumerize backup` to create a backup of your database and `docker-compose exec volumerize restore` to restore it from your backup.
+
+
+# Container Scripts
+
+This image creates at container startup some convenience scripts.
+Under the hood blacklabelops/volumerize uses duplicity. To pass script parameters, see here for duplicity command line options: [Duplicity CLI Options](http://duplicity.nongnu.org/duplicity.1.html#sect5)
+
+| Script | Description |
+|--------|-------------|
+|list-files| prepare the list of current files in the backup 
+| backup | Creates an backup with the containers configuration |
+| backupFull | Creates a full backup with the containers configuration |
+| backupIncremental | Creates an incremental backup with the containers configuration |
+| list | List all available backups |
+| verify | Compare the latest backup to your local files |
+| restore | Be Careful! Triggers an immediate force restore to ${VOLUMERIZE_RESTORE}(default=/restore/) containers folder with the latest backup. To access the file easily you can mount this folder in your local machine |
+|restoremysql|Be Careful! Triggers an immediate force restore to your mysql database|
+|restorepgsql|Be Careful! Triggers an immediate force restore to your pgsql database|
+| periodicBackup | Same script that will be triggered by the periodic schedule |
+| startContainers | Starts the specified Docker containers |
+| stopContainers | Stops the specified Docker containers |
+| remove-older-than | Delete older backups ([Time formats](http://duplicity.nongnu.org/duplicity.1.html#toc8))|
+| cleanCacheLocks | Cleanup of old Cache locks. |
+| prepoststrategy `$execution_phase` `$duplicity_action` | Execute all `.sh` files for the specified exeuction phase and duplicity action in alphabetical order. |
+
+`$execution_phase` must be `preAction` or `postAction`.
+
+`$duplicity_action` must be `backup`, `verify` or `restpore`.
+
+Example triggering script inside running container:
+
+~~~~
+$ docker exec volumerize backup
+~~~~
+
+> Executes script `backup` inside container with name `volumerize`
+
+Example passing script parameter:
+
+~~~~
+$ docker exec volumerize backup --dry-run
+~~~~
+
+> `--dry-run` will simulate not execute the backup procedure.
