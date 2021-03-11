@@ -125,3 +125,15 @@ $ docker exec volumerize backup --dry-run
 ~~~~
 
 > `--dry-run` will simulate not execute the backup procedure.
+
+###Example restoremysql 
+```restoremysql dbname [-t time]
+# example to restore a db from 2 day ago
+# restoremysql roundcube -t 2D
+# more info on time format http://duplicity.nongnu.org/vers8/duplicity.1.html#sect8
+```
+###Example restore a file 
+```restore --file-to-restore relativepath [-t time]
+# example to restore a file from 2 hour ago
+# restore --file-to-restore robocup.org-system/image/ -t 2h 
+```
