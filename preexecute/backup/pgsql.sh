@@ -9,6 +9,6 @@ FULL_BACKUP_QUERY="select datname from pg_database where not datistemplate and d
 
 for PGDATABASE in `psql -h ${PGHOST} -U "${PGUSERNAME}"  -At -c "$FULL_BACKUP_QUERY" postgres`; do
   echo "pg_dump -Fp starts " ${MYSQL_DATABASE}
-  pg_dump -U "${PGUSERNAME}"  -h "${PGHOST}" "${PGDATABASE}" | ${VOLUMERIZE_SOURCE}/volumerize-pgsql/dump-${PGDATABASE}.sql || true
+  pg_dump -U "${PGUSERNAME}"  -h "${PGHOST}" "${PGDATABASE}" > ${VOLUMERIZE_SOURCE}/volumerize-pgsql/dump-${PGDATABASE}.sql || true
   
 done
