@@ -14,3 +14,6 @@ for PGDATABASE in `psql -h ${PGHOST} -U "${PGUSERNAME}"  -At -c "$FULL_BACKUP_QU
   echo "pg_dump -Fp starts " ${PGDATABASE}
   pg_dump -U "${PGUSERNAME}"  -h "${PGHOST}" "${PGDATABASE}" > ${VOLUMERIZE_SOURCE}/volumerize-pgsql/dump-${PGDATABASE}.sql || true
 done
+
+
+
