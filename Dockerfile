@@ -4,7 +4,7 @@ RUN apk add --no-cache \
     mysql-client pv
 
 RUN apk upgrade &&\
-	apk add postgresql
+	apk add postgresql curl jq
 
 COPY postexecute /postexecute
 COPY preexecute /preexecute
