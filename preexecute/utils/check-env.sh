@@ -7,8 +7,6 @@
  ##
 function _check_env_failed {
     echo "Environment variable $1 is not set."
-    echo "Environment variables failed, exit 1"
-    exit 1
 }
 
 ## 
@@ -34,10 +32,12 @@ function check_env {
         # Check if env var is setted, if not raise error
         if [ "${!e_var}" = "" ]; then 
             _check_env_failed $e_var; 
+            return 1
         else 
             _check_env_ok $e_var; 
         fi
 
     done
     echo "Environment variables ok."
+    return 0
 }
