@@ -1,6 +1,6 @@
 source /preexecute/utils/check-env.sh
 
-check_env "PGPASSWORD" "PGUSERNAME" "PGHOST"
+check_env "PGPASSWORD" "PGUSERNAME" "PGHOST" || { echo "Ignoring PGSQL backup"; return 1; }
 
 echo "Creating $VOLUMERIZE_SOURCE folder if not exists"
 mkdir -p $VOLUMERIZE_SOURCE/volumerize-pgsql/
