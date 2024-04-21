@@ -1,6 +1,6 @@
 source /preexecute/utils/check-env.sh
 
-check_env "Mysqldump" "MYSQL_PASSWORD" "MYSQL_USERNAME" "MYSQL_HOST" || { echo "Ignoring MySQL backup"; return 1; }
+check_env "Mysqldump" "MYSQL_PASSWORD" "MYSQL_USERNAME" "MYSQL_HOST" || { echo "Ignoring MySQL backup"; return 0; }
 
 echo "Creating $VOLUMERIZE_SOURCE folder if not exists"
 mkdir -p $VOLUMERIZE_SOURCE/volumerize-mysql/
