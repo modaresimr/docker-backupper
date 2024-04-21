@@ -41,3 +41,5 @@ function check_env {
     echo "Environment variables ok."
     return 0
 }
+
+
